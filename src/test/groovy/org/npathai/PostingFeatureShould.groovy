@@ -1,5 +1,6 @@
 package org.npathai
 
+import org.mockito.AdditionalAnswers
 import org.mockito.InOrder
 import org.mockito.Mockito
 import spock.lang.Specification
@@ -27,13 +28,18 @@ class PostingFeatureShould extends Specification {
 
     class Fixture {
         Console mockConsole = Mockito.mock(Console)
-        Application application = new Application(mockConsole)
+        def allCommands = [] as List
+        Twitterati application = new Twitterati(mockConsole, null)
 
-        void receives(String command, String... commands) {
-            when(mockConsole.readLine()).thenReturn(command, commands)
+        void receives(String... commands) {
+            for (String command : commands) {
+                allCommands << command
+            }
         }
 
         void start() {
+            allCommands << "q"
+            when(mockConsole.readLine()).thenAnswer(AdditionalAnswers.returnsElementsOf(allCommands))
             application.start()
         }
 
