@@ -29,7 +29,7 @@ class PostingFeatureShould extends Specification {
     class Fixture {
         Console mockConsole = Mockito.mock(Console)
         def allCommands = [] as List
-        Twitterati application = new Twitterati(mockConsole, null)
+        Twitterati application = new Twitterati(mockConsole, new CommandExecutor(new CommandFactory()))
 
         void receives(String... commands) {
             for (String command : commands) {
