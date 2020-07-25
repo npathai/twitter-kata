@@ -14,6 +14,6 @@ public class CommandFactory {
         if (postCommandPattern.matcher(commandName).matches()) {
             return new PostCommand(commandName, userService);
         }
-        return new ReadCommand();
+        return new ReadCommand(commandName, userService);
     }
 }
