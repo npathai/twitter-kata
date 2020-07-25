@@ -13,4 +13,8 @@ public class UserService {
     public Optional<List<String>> postsBy(String user) {
         return Optional.ofNullable(postsByUser.get(user));
     }
+
+    public void addFollowing(String from, String to) {
+
+    }
 }

@@ -15,7 +15,7 @@ public class CommandFactory {
         if (postCommandPattern.matcher(commandName).matches()) {
             return new PostCommand(commandName, userService);
         } else if (followCommandPattern.matcher(commandName).matches()) {
-            return new FollowCommand();
+            return new FollowCommand(commandName, userService);
         }
         return new ReadCommand(commandName, userService);
     }
