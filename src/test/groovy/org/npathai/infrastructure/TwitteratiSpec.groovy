@@ -3,6 +3,8 @@ package org.npathai.infrastructure
 import org.mockito.AdditionalAnswers
 import org.mockito.InOrder
 import org.mockito.Mockito
+import org.mockito.invocation.InvocationOnMock
+import org.mockito.stubbing.Answer
 import org.npathai.CommandExecutor
 import org.npathai.CommandFactory
 import org.npathai.Console
@@ -27,7 +29,7 @@ class TwitteratiSpec extends Specification {
         def allTimes = []
 
         Twitterati application = new Twitterati(mockConsole, new CommandExecutor(
-                new CommandFactory(new UserService(Clock.systemDefaultZone()))))
+                new CommandFactory(new UserService(mockClock))))
 
         def receives(String... commands) {
             for (String command : commands) {
@@ -45,9 +47,15 @@ class TwitteratiSpec extends Specification {
             when(mockConsole.readLine()).thenAnswer(AdditionalAnswers.returnsElementsOf(allCommands))
 
             if (allTimes.isEmpty()) {
-                allTimes << Clock.systemDefaultZone().millis()
+                when(mockClock.millis()).thenAnswer(new Answer<Long>() {
+                    @Override
+                    Long answer(InvocationOnMock invocation) throws Throwable {
+                        return System.currentTimeMillis()
+                    }
+                })
+            } else {
+                when(mockClock.millis()).thenAnswer(AdditionalAnswers.returnsElementsOf(allTimes))
             }
-            when(mockClock.millis()).thenAnswer(AdditionalAnswers.returnsElementsOf(allTimes))
             application.start()
         }
 

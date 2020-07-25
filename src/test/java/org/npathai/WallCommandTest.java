@@ -37,7 +37,7 @@ class WallCommandTest {
     @Test
     public void returnEmptyListWhenUserDoesNotExist() {
         WallCommand wallCommand = new WallCommand(WALL_COMMAND, userService);
-        given(userService.wall(UNKNOWN_USER)).willReturn(Optional.empty());
+        given(userService.wall(USER)).willReturn(Optional.empty());
 
         assertThat(wallCommand.execute()).isEmpty();
     }
