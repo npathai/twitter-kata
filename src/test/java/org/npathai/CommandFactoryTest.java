@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CommandFactoryTest {
 
     private static final String POST_COMMAND = "Alice -> Hi, I am Alice";
+    private static final String FOLLOW_COMMAND = "Bob follows Alice";
     private CommandFactory commandFactory;
 
     @Mock
@@ -26,6 +27,13 @@ class CommandFactoryTest {
         Command postCommand = commandFactory.createCommand(POST_COMMAND);
 
         assertThat(postCommand).isInstanceOf(PostCommand.class);
+    }
+
+    @Test
+    public void returnsFollowCommand() {
+        Command followCommand = commandFactory.createCommand(FOLLOW_COMMAND);
+
+        assertThat(followCommand).isInstanceOf(FollowCommand.class);
     }
 
     @Test

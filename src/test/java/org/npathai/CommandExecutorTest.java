@@ -18,6 +18,7 @@ class CommandExecutorTest {
 
     private static final String TIMELINE_COMMAND = "Alice";
     private static final String USER_POST_1 = "Alice -> Hi, I am Alice";
+
     @Mock
     CommandFactory commandFactory;
     private CommandExecutor executor;
