@@ -18,7 +18,7 @@ public class CommandFactory {
         } else if (followCommandPattern.matcher(commandName).matches()) {
             return new FollowCommand(commandName, userService);
         } else if (wallCommand.matcher(commandName).matches()) {
-            return new WallCommand();
+            return new WallCommand(commandName, userService);
         }
         return new ReadCommand(commandName, userService);
     }

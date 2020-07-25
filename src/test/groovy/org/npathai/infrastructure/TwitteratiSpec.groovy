@@ -10,17 +10,24 @@ import org.npathai.Twitterati
 import org.npathai.UserService
 import spock.lang.Specification
 
+import java.time.Clock
+
 import static org.mockito.Mockito.when
 
 class TwitteratiSpec extends Specification {
+    static final long NOW = System.currentTimeMillis()
 
     Fixture application = new Fixture();
 
     class Fixture {
         Console mockConsole = Mockito.mock(Console)
+        Clock mockClock = Mockito.mock(Clock)
 
-        def allCommands = [] as List
-        Twitterati application = new Twitterati(mockConsole, new CommandExecutor(new CommandFactory( new UserService())))
+        def allCommands = []
+        def allTimes = []
+
+        Twitterati application = new Twitterati(mockConsole, new CommandExecutor(
+                new CommandFactory(new UserService(Clock.systemDefaultZone()))))
 
         def receives(String... commands) {
             for (String command : commands) {
@@ -28,9 +35,19 @@ class TwitteratiSpec extends Specification {
             }
         }
 
+        def receives(String command, long receivedTime) {
+            allCommands << command
+            allTimes << receivedTime
+        }
+
         void start() {
             allCommands << "q"
             when(mockConsole.readLine()).thenAnswer(AdditionalAnswers.returnsElementsOf(allCommands))
+
+            if (allTimes.isEmpty()) {
+                allTimes << Clock.systemDefaultZone().millis()
+            }
+            when(mockClock.millis()).thenAnswer(AdditionalAnswers.returnsElementsOf(allTimes))
             application.start()
         }
 

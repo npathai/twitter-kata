@@ -3,6 +3,7 @@ package org.npathai;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,14 +14,16 @@ class UserServiceTest {
     private static final String NEW_USER = "Alice";
     private static final String POST = "Hi";
     private static final String USER = "Tim";
-    private static final String FIRST_POST = "Hola";
-    private static final String SECOND_POST = "Adios";
+    private static final String FIRST_POST = "Alice First Post";
+    private static final String SECOND_POST = "Alice Second Post";
 
     private UserService userService;
+    private MutableClock mutableClock;
 
     @BeforeEach
     public void initialize() {
-        userService = new UserService();
+        mutableClock = new MutableClock();
+        userService = new UserService(mutableClock);
     }
 
     @Test
@@ -43,5 +46,27 @@ class UserServiceTest {
 
         assertThat(userService.postsBy(USER))
                 .contains(List.of(SECOND_POST, FIRST_POST));
+    }
+
+    @Test
+    public void returnsPostsByUserAndByUsersHeFollowsInReverseChronologicalOrder() {
+        userService.save("Alice", FIRST_POST);
+
+        afterDelayOf(Duration.ofSeconds(1));
+        userService.save("Bob", "Bob First Post");
+
+        afterDelayOf(Duration.ofSeconds(1));
+        userService.save("Alice", SECOND_POST);
+        userService.addFollowing("Bob", "Alice");
+
+        assertThat(userService.wall("Bob")).contains(List.of(
+                "Alice -> " + SECOND_POST,
+                "Bob -> " + "Bob First Post",
+                "Alice -> " + FIRST_POST
+        ));
+    }
+
+    private void afterDelayOf(Duration amount) {
+        mutableClock.advanceBy(amount);
     }
 }
