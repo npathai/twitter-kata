@@ -6,6 +6,7 @@ public class CommandFactory {
     private final UserService userService;
     private Pattern postCommandPattern = Pattern.compile(".*\\s->\\s.*");
     private Pattern followCommandPattern = Pattern.compile(".*\\sfollows\\s.*");
+    private Pattern wallCommand = Pattern.compile(".*\\swall");
 
     public CommandFactory(UserService userService) {
         this.userService = userService;
@@ -16,6 +17,8 @@ public class CommandFactory {
             return new PostCommand(commandName, userService);
         } else if (followCommandPattern.matcher(commandName).matches()) {
             return new FollowCommand(commandName, userService);
+        } else if (wallCommand.matcher(commandName).matches()) {
+            return new WallCommand();
         }
         return new ReadCommand(commandName, userService);
     }

@@ -11,6 +11,8 @@ class CommandFactoryTest {
 
     private static final String POST_COMMAND = "Alice -> Hi, I am Alice";
     private static final String FOLLOW_COMMAND = "Bob follows Alice";
+    private static final String WALL_COMMAND = "Bob wall";
+
     private CommandFactory commandFactory;
 
     @Mock
@@ -34,6 +36,13 @@ class CommandFactoryTest {
         Command followCommand = commandFactory.createCommand(FOLLOW_COMMAND);
 
         assertThat(followCommand).isInstanceOf(FollowCommand.class);
+    }
+
+    @Test
+    public void returnsWallCommand() {
+        Command wallCommand = commandFactory.createCommand(WALL_COMMAND);
+
+        assertThat(wallCommand).isInstanceOf(WallCommand.class);
     }
 
     @Test
