@@ -29,9 +29,9 @@ class CommandFactoryTest {
     }
 
     @Test
-    public void returnsNullWhenThereIsNoMatchingCommand() {
-        Command invalidCommand = commandFactory.createCommand("invalid");
+    public void returnsReadCommandWhenThereIsNoMatchingCommand() {
+        Command readCommand = commandFactory.createCommand("non-matching-command");
 
-        assertThat(invalidCommand).isNull();
+        assertThat(readCommand).isInstanceOf(ReadCommand.class);
     }
 }
