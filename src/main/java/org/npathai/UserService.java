@@ -5,47 +5,61 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserService {
+    private final Map<String, User> userByName = new HashMap<>();
     private final Clock clock;
-    private Map<String, LinkedList<Post>> postsByUser = new HashMap<>();
-    private Map<String, String> followingByUser = new HashMap<>();
 
     public UserService(Clock clock) {
         this.clock = clock;
     }
 
-    public void save(String user, String post) {
-        postsByUser.computeIfAbsent(user, u -> new LinkedList<>());
-        postsByUser.get(user).addFirst(new Post(user, post, clock.millis()));
+    public void save(String username, String post) {
+        User user = userBy(username);
+        user.addPost(new Post(username, post, clock.millis()));
     }
 
-    public Optional<List<String>> postsBy(String user) {
-        LinkedList<Post> userPosts = postsByUser.get(user);
-        if (userPosts == null) {
+    private User userBy(String username) {
+        return getUserBy(username)
+                .orElseGet(() -> createUser(username));
+    }
+
+    private User createUser(String username) {
+        User user = new User(username);
+        userByName.put(username, user);
+        return user;
+    }
+
+    private Optional<User> getUserBy(String username) {
+        return Optional.ofNullable(userByName.get(username));
+    }
+
+    public Optional<List<String>> postsBy(String username) {
+        Optional<User> optionalUser = getUserBy(username);
+        if (optionalUser.isEmpty()) {
             return Optional.empty();
         }
 
+        List<Post> userPosts = optionalUser.get().posts();
         return Optional.of(userPosts
                 .stream().map(post -> post.message)
                 .collect(Collectors.toList()));
     }
 
-    public void addFollowing(String from, String to) {
-        followingByUser.put(from, to);
+    public void addFollowing(String fromUsername, String toUsername) {
+        User fromUser = userBy(fromUsername);
+        fromUser.follows(userBy(toUsername));
     }
 
-    public Optional<List<String>> wall(String user) {
-        LinkedList<Post> userPosts = postsByUser.get(user);
-        if (userPosts == null) {
+    public Optional<List<String>> wall(String username) {
+        Optional<User> optionalUser = getUserBy(username);
+        if (optionalUser.isEmpty()) {
             return Optional.of(Collections.emptyList());
         }
 
-        ArrayList<Post> wallPosts = new ArrayList<>();
-        wallPosts.addAll(userPosts);
+        List<Post> userPosts = optionalUser.get().posts();
+        ArrayList<Post> wallPosts = new ArrayList<>(userPosts);
 
-        String followedUser = followingByUser.get(user);
-        if (followedUser != null) {
-            wallPosts.addAll(postsByUser.get(followedUser));
-        }
+        optionalUser.get().followedUsers()
+                .forEach(followedUser -> wallPosts.addAll(followedUser.posts()));
 
         List<String> sortedPosts = wallPosts.stream()
                 .sorted(Comparator.reverseOrder())
@@ -55,20 +69,4 @@ public class UserService {
         return Optional.of(sortedPosts);
     }
 
-    class Post implements Comparable<Post> {
-        String user;
-        String message;
-        long createdAt;
-
-        public Post(String user, String message, long createdAt) {
-            this.user = user;
-            this.message = message;
-            this.createdAt = createdAt;
-        }
-
-        @Override
-        public int compareTo(Post post) {
-            return Long.compare(createdAt, post.createdAt);
-        }
-    }
 }
