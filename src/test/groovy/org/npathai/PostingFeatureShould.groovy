@@ -13,9 +13,12 @@ class PostingFeatureShould extends Specification {
 
     def "As a user, to share my ideas, I would like to post messages and make them available for others to read"() {
         given: "Alice posts messages"
-        def alicePost1 = "Alice -> Hello, my name is Alice"
-        def alicePost2 = "Alice -> It's a lovely day today"
-        applicationFixture.receives(alicePost1, alicePost2)
+        def alicePost1 = "Hello, my name is Alice"
+        def alicePost2 = "It's a lovely day today"
+
+        def alicePostCommand1 = "Alice -> ${alicePost1}"
+        def alicePostCommand2 = "Alice -> ${alicePost2}"
+        applicationFixture.receives(alicePostCommand1, alicePostCommand2)
 
         when: "Bob visits Alice's timeline"
         def aliceTimelineCommand = "Alice"
@@ -28,10 +31,9 @@ class PostingFeatureShould extends Specification {
 
     class Fixture {
         Console mockConsole = Mockito.mock(Console)
-        UserService userService = Mockito.mock(UserService)
 
         def allCommands = [] as List
-        Twitterati application = new Twitterati(mockConsole, new CommandExecutor(new CommandFactory(userService)))
+        Twitterati application = new Twitterati(mockConsole, new CommandExecutor(new CommandFactory( new UserService())))
 
         void receives(String... commands) {
             for (String command : commands) {

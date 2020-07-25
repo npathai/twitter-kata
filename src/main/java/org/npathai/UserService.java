@@ -1,14 +1,16 @@
 package org.npathai;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class UserService {
-    public void save(String user, String post) {
+    private Map<String, LinkedList<String>> postsByUser = new HashMap<>();
 
+    public void save(String user, String post) {
+        postsByUser.computeIfAbsent(user, u -> new LinkedList<>());
+        postsByUser.get(user).addFirst(post);
     }
 
     public Optional<List<String>> postsBy(String user) {
-        return null;
+        return Optional.ofNullable(postsByUser.get(user));
     }
 }
