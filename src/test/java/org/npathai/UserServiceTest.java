@@ -46,8 +46,8 @@ class UserServiceTest {
         userService.save(USER_TIM, ALICE_SECOND_POST);
 
         assertThat(userService.postsBy(USER_TIM))
-                .contains(List.of(new Post(USER_ALICE, ALICE_SECOND_POST, mutableClock.millis()),
-                        new Post(USER_ALICE, ALICE_FIRST_POST, mutableClock.millis())));
+                .contains(List.of(new Post(USER_TIM, ALICE_SECOND_POST, mutableClock.millis()),
+                        new Post(USER_TIM, ALICE_FIRST_POST, mutableClock.millis())));
     }
 
     @Test

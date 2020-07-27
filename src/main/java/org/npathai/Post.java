@@ -36,4 +36,13 @@ class Post implements Comparable<Post> {
     public int compareTo(Post post) {
         return Long.compare(createdAt, post.createdAt);
     }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "user='" + user + '\'' +
+                ", message='" + message + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }
