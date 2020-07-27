@@ -52,23 +52,25 @@ class UserServiceTest {
 
     @Test
     public void returnsPostsByUserAndByUsersHeFollowsInReverseChronologicalOrder() {
+        long alicePost1CreationTime = mutableClock.millis();
         userService.save("Alice", ALICE_FIRST_POST);
 
-        afterDelayOf(Duration.ofSeconds(1));
+        long bobPostCreationTime = afterDelayOf(Duration.ofSeconds(1));
         userService.save("Bob", "Bob First Post");
 
-        afterDelayOf(Duration.ofSeconds(1));
+        long alicePost2CreationTime = afterDelayOf(Duration.ofSeconds(1));
         userService.save("Alice", ALICE_SECOND_POST);
         userService.addFollowing("Bob", "Alice");
 
         assertThat(userService.wall("Bob")).contains(List.of(
-                "Alice -> " + ALICE_SECOND_POST,
-                "Bob -> " + "Bob First Post",
-                "Alice -> " + ALICE_FIRST_POST
+                new Post("Alice", ALICE_SECOND_POST, alicePost2CreationTime),
+                new Post("Bob", "Bob First Post", bobPostCreationTime),
+                new Post("Alice", ALICE_FIRST_POST, alicePost1CreationTime)
         ));
     }
 
-    private void afterDelayOf(Duration amount) {
+    private long afterDelayOf(Duration amount) {
         mutableClock.advanceBy(amount);
+        return mutableClock.millis();
     }
 }

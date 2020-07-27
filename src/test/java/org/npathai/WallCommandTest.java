@@ -14,8 +14,8 @@ import static org.mockito.BDDMockito.given;
 class WallCommandTest {
 
     private static final String WALL_COMMAND = "Bob wall";
-    private static final String POST = "A Post";
     public static final String USER = "Bob";
+    private static final Post POST = new Post(USER, "A Post", System.currentTimeMillis());
     public static final String UNKNOWN_USER = "Invalid";
 
     @Mock
@@ -31,7 +31,7 @@ class WallCommandTest {
         WallCommand wallCommand = new WallCommand(WALL_COMMAND, userService);
         given(userService.wall(USER)).willReturn(Optional.of(List.of(POST)));
 
-        assertThat(wallCommand.execute()).isEqualTo(List.of(POST));
+        assertThat(wallCommand.execute()).isEqualTo(List.of(POST.user + " -> " + POST.message));
     }
 
     @Test

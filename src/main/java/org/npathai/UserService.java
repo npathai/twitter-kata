@@ -39,10 +39,7 @@ public class UserService {
         }
 
         List<Post> userPosts = optionalUser.get().posts();
-        return Optional.of(userPosts
-                .stream()
-//                .map(post -> post.message)
-                .collect(Collectors.toList()));
+        return Optional.of(new ArrayList<>(userPosts));
     }
 
     public void addFollowing(String fromUsername, String toUsername) {
@@ -50,7 +47,7 @@ public class UserService {
         fromUser.follows(userBy(toUsername));
     }
 
-    public Optional<List<String>> wall(String username) {
+    public Optional<List<Post>> wall(String username) {
         Optional<User> optionalUser = getUserBy(username);
         if (optionalUser.isEmpty()) {
             return Optional.of(Collections.emptyList());
@@ -62,9 +59,8 @@ public class UserService {
         optionalUser.get().followedUsers()
                 .forEach(followedUser -> wallPosts.addAll(followedUser.posts()));
 
-        List<String> sortedPosts = wallPosts.stream()
+        List<Post> sortedPosts = wallPosts.stream()
                 .sorted(Comparator.reverseOrder())
-                .map(post -> post.user + " -> " + post.message)
                 .collect(Collectors.toList());
 
         return Optional.of(sortedPosts);
