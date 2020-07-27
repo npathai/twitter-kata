@@ -27,7 +27,9 @@ class ReadCommandTest {
     @Test
     public void returnsPostsByUserWhenUserExists() {
         ReadCommand readCommand = new ReadCommand(USER, userService);
-        when(userService.postsBy(USER)).thenReturn(Optional.of(List.of("Hi, I am Alice")));
+        when(userService.postsBy(USER)).thenReturn(Optional.of(
+                List.of(new Post(USER, "Hi, I am Alice", 0L)
+        )));
 
         assertThat(readCommand.execute()).containsExactly("Hi, I am Alice");
     }

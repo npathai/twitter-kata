@@ -3,6 +3,7 @@ package org.npathai;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class ReadCommand implements Command {
 
@@ -17,6 +18,7 @@ public class ReadCommand implements Command {
     @Override
     public List<String> execute() {
         return userService.postsBy(command)
+                .map(posts -> posts.stream().map(post -> post.message()).collect(Collectors.toList()))
                 .orElse(Collections.emptyList());
     }
 }

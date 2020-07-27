@@ -32,7 +32,7 @@ public class UserService {
         return Optional.ofNullable(userByName.get(username));
     }
 
-    public Optional<List<String>> postsBy(String username) {
+    public Optional<List<Post>> postsBy(String username) {
         Optional<User> optionalUser = getUserBy(username);
         if (optionalUser.isEmpty()) {
             return Optional.empty();
@@ -40,7 +40,8 @@ public class UserService {
 
         List<Post> userPosts = optionalUser.get().posts();
         return Optional.of(userPosts
-                .stream().map(post -> post.message)
+                .stream()
+//                .map(post -> post.message)
                 .collect(Collectors.toList()));
     }
 
