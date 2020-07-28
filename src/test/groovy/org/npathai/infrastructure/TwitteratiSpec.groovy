@@ -18,7 +18,7 @@ class TwitteratiSpec extends Specification {
     Fixture application = new Fixture();
 
     class Fixture {
-        Console mockConsole = Mockito.spy(Console)
+        Console mockConsole = Mockito.mock(Console)
         Clock mockClock = Mockito.mock(Clock)
         View view = new View(mockConsole, new PostFormatter())
 
