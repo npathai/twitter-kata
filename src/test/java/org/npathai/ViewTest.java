@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDateTime;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class ViewTest {
-    static final Post POST = new Post("Alice", "Hi, I am Alice", System.currentTimeMillis());
+    static final Post POST = new Post("Alice", "Hi, I am Alice", LocalDateTime.now());
 
     @Mock
     Console mockConsole;

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import static org.mockito.Mockito.*;
@@ -53,7 +54,7 @@ class TwitteratiTest {
 
     @Test
     public void writesOutputOfCommandOnConsole() {
-        Post post = new Post("Alice", "Hi, I am Alice", System.currentTimeMillis());
+        Post post = new Post("Alice", "Hi, I am Alice", LocalDateTime.now());
         when(mockConsole.readLine()).thenReturn(TIMELINE_COMMAND, QUIT);
 
         when(commandExecutor.execute(TIMELINE_COMMAND)).thenReturn(Arrays.asList(post));

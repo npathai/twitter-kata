@@ -1,13 +1,14 @@
 package org.npathai;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 class Post implements Comparable<Post> {
     String user;
     String message;
-    long createdAt;
+    LocalDateTime createdAt;
 
-    public Post(String user, String message, long createdAt) {
+    public Post(String user, String message, LocalDateTime createdAt) {
         this.user = user;
         this.message = message;
         this.createdAt = createdAt;
@@ -22,7 +23,7 @@ class Post implements Comparable<Post> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return createdAt == post.createdAt &&
+        return Objects.equals(createdAt, post.createdAt) &&
                 Objects.equals(user, post.user) &&
                 Objects.equals(message, post.message);
     }
@@ -34,7 +35,7 @@ class Post implements Comparable<Post> {
 
     @Override
     public int compareTo(Post post) {
-        return Long.compare(createdAt, post.createdAt);
+        return createdAt.compareTo(post.createdAt);
     }
 
     @Override

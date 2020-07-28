@@ -6,6 +6,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +16,7 @@ import static org.mockito.Mockito.when;
 class CommandExecutorTest {
 
     private static final String TIMELINE_COMMAND = "Alice";
-    private static final Post USER_POST_1 = new Post("Alice", "Hi, I am Alice", System.currentTimeMillis());
+    private static final Post USER_POST_1 = new Post("Alice", "Hi, I am Alice", LocalDateTime.now());
 
     @Mock
     CommandFactory commandFactory;

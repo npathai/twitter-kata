@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,7 @@ class ReadCommandTest {
 
     private static final String USER = "Alice";
     private static final String UNKNOWN_USER = "Invalid";
-    private static final Post POST = new Post(USER, "Hi, I am Alice", 0L);
+    private static final Post POST = new Post(USER, "Hi, I am Alice", LocalDateTime.now());
 
     @Mock
     UserService userService;

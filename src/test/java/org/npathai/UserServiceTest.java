@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,7 +38,7 @@ class UserServiceTest {
         userService.save(USER_ALICE, POST);
 
         assertThat(userService.postsBy(USER_ALICE))
-                .hasValue(List.of(new Post(USER_ALICE, POST, mutableClock.millis())));
+                .hasValue(List.of(new Post(USER_ALICE, POST, LocalDateTime.now(mutableClock))));
     }
 
     @Test
@@ -46,19 +47,19 @@ class UserServiceTest {
         userService.save(USER_TIM, ALICE_SECOND_POST);
 
         assertThat(userService.postsBy(USER_TIM))
-                .contains(List.of(new Post(USER_TIM, ALICE_SECOND_POST, mutableClock.millis()),
-                        new Post(USER_TIM, ALICE_FIRST_POST, mutableClock.millis())));
+                .contains(List.of(new Post(USER_TIM, ALICE_SECOND_POST, LocalDateTime.now(mutableClock)),
+                        new Post(USER_TIM, ALICE_FIRST_POST, LocalDateTime.now(mutableClock))));
     }
 
     @Test
     public void returnsPostsByUserAndByUsersHeFollowsInReverseChronologicalOrder() {
-        long alicePost1CreationTime = mutableClock.millis();
+        LocalDateTime alicePost1CreationTime = LocalDateTime.now(mutableClock);
         userService.save("Alice", ALICE_FIRST_POST);
 
-        long bobPostCreationTime = afterDelayOf(Duration.ofSeconds(1));
+        LocalDateTime bobPostCreationTime = afterDelayOf(Duration.ofSeconds(1));
         userService.save("Bob", "Bob First Post");
 
-        long alicePost2CreationTime = afterDelayOf(Duration.ofSeconds(1));
+        LocalDateTime alicePost2CreationTime = afterDelayOf(Duration.ofSeconds(1));
         userService.save("Alice", ALICE_SECOND_POST);
         userService.addFollowing("Bob", "Alice");
 
@@ -69,8 +70,8 @@ class UserServiceTest {
         ));
     }
 
-    private long afterDelayOf(Duration amount) {
+    private LocalDateTime afterDelayOf(Duration amount) {
         mutableClock.advanceBy(amount);
-        return mutableClock.millis();
+        return LocalDateTime.now(mutableClock);
     }
 }

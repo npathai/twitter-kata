@@ -1,6 +1,7 @@
 package org.npathai;
 
 import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,7 +15,7 @@ public class UserService {
 
     public void save(String username, String post) {
         User user = userBy(username);
-        user.addPost(new Post(username, post, clock.millis()));
+        user.addPost(new Post(username, post, LocalDateTime.now(clock)));
     }
 
     private User userBy(String username) {
