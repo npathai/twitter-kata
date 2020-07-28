@@ -10,7 +10,7 @@ public class CommandExecutor {
         this.commandFactory = commandFactory;
     }
 
-    public List<String> execute(String commandName) {
+    public List<Post> execute(String commandName) {
         Command command = commandFactory.createCommand(commandName);
         if (command == null) {
             return Collections.emptyList();

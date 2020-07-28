@@ -14,7 +14,7 @@ public class FollowCommand implements Command {
     }
 
     @Override
-    public List<String> execute() {
+    public List<Post> execute() {
         String[] parts = command.split(" follows ");
         String from = parts[0];
         String to = parts[1];

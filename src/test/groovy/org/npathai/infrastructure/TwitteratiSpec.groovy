@@ -5,15 +5,14 @@ import org.mockito.InOrder
 import org.mockito.Mockito
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.stubbing.Answer
-import org.npathai.CommandExecutor
-import org.npathai.CommandFactory
-import org.npathai.Console
-import org.npathai.Twitterati
-import org.npathai.UserService
+import org.npathai.*
 import spock.lang.Specification
 
 import java.time.Clock
 
+import static org.mockito.Matchers.any
+import static org.mockito.Mockito.doCallRealMethod
+import static org.mockito.Mockito.doNothing
 import static org.mockito.Mockito.when
 
 class TwitteratiSpec extends Specification {
@@ -22,7 +21,7 @@ class TwitteratiSpec extends Specification {
     Fixture application = new Fixture();
 
     class Fixture {
-        Console mockConsole = Mockito.mock(Console)
+        Console mockConsole = Mockito.spy(Console)
         Clock mockClock = Mockito.mock(Clock)
 
         def allCommands = []
@@ -43,6 +42,8 @@ class TwitteratiSpec extends Specification {
         }
 
         void start() {
+            doCallRealMethod().when(mockConsole).display(any(Post.class))
+
             allCommands << "q"
             when(mockConsole.readLine()).thenAnswer(AdditionalAnswers.returnsElementsOf(allCommands))
 

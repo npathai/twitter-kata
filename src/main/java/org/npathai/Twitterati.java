@@ -15,9 +15,9 @@ public class Twitterati {
     public void start() {
         String command;
         while (!(command = console.readLine()).equals("q")) {
-            List<String> output = commandExecutor.execute(command);
-            for (String outputLine : output) {
-                console.writeLine(outputLine);
+            List<Post> posts = commandExecutor.execute(command);
+            for (Post post : posts) {
+                console.display(post);
             }
         }
     }

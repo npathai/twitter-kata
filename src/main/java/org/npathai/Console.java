@@ -7,6 +7,10 @@ public class Console {
     }
 
     public void writeLine(String line) {
+        System.out.println(line);
+    }
 
+    public void display(Post post) {
+        writeLine(post.user + " - " + post.message);
     }
 }

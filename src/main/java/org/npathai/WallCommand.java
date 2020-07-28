@@ -3,7 +3,6 @@ package org.npathai;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class WallCommand implements Command {
 
@@ -16,13 +15,10 @@ public class WallCommand implements Command {
     }
 
     @Override
-    public List<String> execute() {
+    public List<Post> execute() {
         String[] parts = command.split(" wall");
         String user = parts[0];
         return userService.wall(user)
-                .map(wallPosts -> wallPosts.stream()
-                        .map(post -> post.user + " -> " + post.message)
-                        .collect(Collectors.toList()))
                 .orElse(Collections.emptyList());
     }
 }

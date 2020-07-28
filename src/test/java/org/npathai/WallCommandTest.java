@@ -31,7 +31,7 @@ class WallCommandTest {
         WallCommand wallCommand = new WallCommand(WALL_COMMAND, userService);
         given(userService.wall(USER)).willReturn(Optional.of(List.of(POST)));
 
-        assertThat(wallCommand.execute()).isEqualTo(List.of(POST.user + " -> " + POST.message));
+        assertThat(wallCommand.execute()).isEqualTo(List.of(POST));
     }
 
     @Test

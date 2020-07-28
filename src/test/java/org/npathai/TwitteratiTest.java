@@ -50,11 +50,12 @@ class TwitteratiTest {
 
     @Test
     public void writesOutputOfCommandOnConsole() {
+        Post post = new Post("Alice", "Hi, I am Alice", System.currentTimeMillis());
         when(mockConsole.readLine()).thenReturn(TIMELINE_COMMAND, QUIT);
-        when(commandExecutor.execute(TIMELINE_COMMAND)).thenReturn(Arrays.asList(USER_POST_1));
 
+        when(commandExecutor.execute(TIMELINE_COMMAND)).thenReturn(Arrays.asList(post));
         twitterati.start();
 
-        verify(mockConsole).writeLine(USER_POST_1);
+        verify(mockConsole).display(post);
     }
 }

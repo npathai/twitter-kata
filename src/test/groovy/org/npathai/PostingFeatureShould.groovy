@@ -20,7 +20,7 @@ class PostingFeatureShould extends TwitteratiSpec {
         application.start()
 
         then: "Alice's messages are displayed in reverse-chronological order"
-        application.displays(alicePost2, alicePost1)
+        application.displays("Alice - ${alicePost2}", "Alice - ${alicePost1}")
     }
 
 }

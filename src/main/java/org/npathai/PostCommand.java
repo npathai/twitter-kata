@@ -15,7 +15,7 @@ public class PostCommand implements Command {
     }
 
     @Override
-    public List<String> execute() {
+    public List<Post> execute() {
         String[] parts = command.split(" -> ");
         String user = parts[0];
         String post = parts[1];
