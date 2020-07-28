@@ -10,7 +10,4 @@ public class Console {
         System.out.println(line);
     }
 
-    public void display(Post post) {
-        writeLine(post.user + " - " + post.message);
-    }
 }

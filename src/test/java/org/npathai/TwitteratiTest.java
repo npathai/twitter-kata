@@ -16,6 +16,9 @@ class TwitteratiTest {
     private static final String TIMELINE_COMMAND = "Alice";
 
     @Mock
+    View mockView;
+
+    @Mock
     Console mockConsole;
 
     @Mock
@@ -27,7 +30,7 @@ class TwitteratiTest {
     public void initialize() {
         MockitoAnnotations.initMocks(this);
 
-        twitterati = new Twitterati(mockConsole, commandExecutor);
+        twitterati = new Twitterati(mockView, mockConsole, commandExecutor);
     }
 
     @Test
@@ -56,6 +59,6 @@ class TwitteratiTest {
         when(commandExecutor.execute(TIMELINE_COMMAND)).thenReturn(Arrays.asList(post));
         twitterati.start();
 
-        verify(mockConsole).display(post);
+        verify(mockView).display(post);
     }
 }

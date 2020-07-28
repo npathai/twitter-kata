@@ -10,9 +10,6 @@ import spock.lang.Specification
 
 import java.time.Clock
 
-import static org.mockito.Matchers.any
-import static org.mockito.Mockito.doCallRealMethod
-import static org.mockito.Mockito.doNothing
 import static org.mockito.Mockito.when
 
 class TwitteratiSpec extends Specification {
@@ -23,11 +20,12 @@ class TwitteratiSpec extends Specification {
     class Fixture {
         Console mockConsole = Mockito.spy(Console)
         Clock mockClock = Mockito.mock(Clock)
+        View view = new View(mockConsole, new PostFormatter())
 
         def allCommands = []
         def allTimes = []
 
-        Twitterati application = new Twitterati(mockConsole, new CommandExecutor(
+        Twitterati application = new Twitterati(view, mockConsole, new CommandExecutor(
                 new CommandFactory(new UserService(mockClock))))
 
         def receives(String... commands) {
@@ -42,8 +40,6 @@ class TwitteratiSpec extends Specification {
         }
 
         void start() {
-            doCallRealMethod().when(mockConsole).display(any(Post.class))
-
             allCommands << "q"
             when(mockConsole.readLine()).thenAnswer(AdditionalAnswers.returnsElementsOf(allCommands))
 
