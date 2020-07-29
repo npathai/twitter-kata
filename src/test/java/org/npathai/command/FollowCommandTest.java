@@ -1,9 +1,11 @@
-package org.npathai;
+package org.npathai.command;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.npathai.command.FollowCommand;
+import org.npathai.service.UserService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;

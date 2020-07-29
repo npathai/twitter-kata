@@ -1,7 +1,9 @@
-package org.npathai;
+package org.npathai.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.npathai.MutableClock;
+import org.npathai.service.UserService;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

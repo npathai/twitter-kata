@@ -1,7 +1,9 @@
-package org.npathai;
+package org.npathai.command;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.npathai.MutableClock;
+import org.npathai.domain.Post;
 
 import java.time.LocalDateTime;
 
@@ -21,7 +23,7 @@ class PostFormatterTest {
     @Test
     public void formatsPostAsUsernameAndMessagedSeparatedByDash() {
         String formattedPost = postFormatter.format(POST);
-        assertThat(formattedPost).startsWith(POST.user + " - " + POST.message);
+        assertThat(formattedPost).startsWith(POST.user() + " - " + POST.message());
     }
 
     @Test

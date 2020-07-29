@@ -1,4 +1,4 @@
-package org.npathai;
+package org.npathai.view;
 
 import java.util.Scanner;
 

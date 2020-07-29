@@ -1,12 +1,12 @@
-package org.npathai;
+package org.npathai.domain;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-class Post implements Comparable<Post> {
-    String user;
-    String message;
-    LocalDateTime createdAt;
+public class Post implements Comparable<Post> {
+    private final String user;
+    private final String message;
+    private final LocalDateTime createdAt;
 
     public Post(String user, String message, LocalDateTime createdAt) {
         this.user = user;
@@ -16,6 +16,14 @@ class Post implements Comparable<Post> {
 
     public String message() {
         return message;
+    }
+
+    public String user() {
+        return user;
+    }
+
+    public LocalDateTime createdAt() {
+        return createdAt;
     }
 
     @Override

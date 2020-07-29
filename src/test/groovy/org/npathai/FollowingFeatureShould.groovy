@@ -21,7 +21,7 @@ class FollowingFeatureShould extends TwitteratiSpec {
                 "Alice - Hi, I am Alice (2 seconds ago)")
     }
 
-    def "In order to see what my friends are up to, as a user, I would like to follow multiple friends and se their msgs on wall"() {
+    def "In order to see what my friends are up to, as a user, I would like to follow multiple friends and see their msgs on wall"() {
         given: "Bob follows Alice and Tim"
         application.receives("Alice -> Hi, I am Alice", application.now().minusSeconds(4))
         application.receives("Bob -> Hola, I am Bob", application.now().minusSeconds(2))

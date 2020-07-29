@@ -1,4 +1,7 @@
-package org.npathai;
+package org.npathai.view;
+
+import org.npathai.command.PostFormatter;
+import org.npathai.domain.Post;
 
 public class View {
 

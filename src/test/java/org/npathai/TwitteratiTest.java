@@ -4,6 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.npathai.command.CommandExecutor;
+import org.npathai.domain.Post;
+import org.npathai.view.Console;
+import org.npathai.view.View;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;

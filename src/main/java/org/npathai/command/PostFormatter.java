@@ -1,4 +1,6 @@
-package org.npathai;
+package org.npathai.command;
+
+import org.npathai.domain.Post;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -22,14 +24,14 @@ public class PostFormatter {
     }
 
     public String format(Post post) {
-        return post.user + " - " + post.message + " (" + elapsedTime(post) + ")";
+        return post.user() + " - " + post.message() + " (" + elapsedTime(post) + ")";
     }
 
     private String elapsedTime(Post post) {
         LocalDateTime now = LocalDateTime.now(clock);
 
         for (ChronoPair pair : DESC_SUPPORTED_UNITS) {
-            long elapsedTimeInUnit = pair.chronoUnit.between(post.createdAt, now);
+            long elapsedTimeInUnit = pair.chronoUnit.between(post.createdAt(), now);
             if (elapsedTimeInUnit == 0) {
                 continue;
             }

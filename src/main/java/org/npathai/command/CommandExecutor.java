@@ -1,4 +1,6 @@
-package org.npathai;
+package org.npathai.command;
+
+import org.npathai.domain.Post;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,9 +1,11 @@
-package org.npathai;
+package org.npathai.view;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.npathai.command.PostFormatter;
+import org.npathai.domain.Post;
 
 import java.time.LocalDateTime;
 
@@ -29,7 +31,7 @@ class ViewTest {
 
     @Test
     public void invokesPostFormatterAndDisplaysTheResultOnConsole() {
-        String formattedPost = POST.user + "-" + POST.message;
+        String formattedPost = POST.user() + "-" + POST.message();
         when(postFormatter.format(POST)).thenReturn(formattedPost);
 
         view.display(POST);

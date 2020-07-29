@@ -1,4 +1,7 @@
-package org.npathai;
+package org.npathai.service;
+
+import org.npathai.domain.User;
+import org.npathai.domain.Post;
 
 import java.time.Clock;
 import java.time.LocalDateTime;

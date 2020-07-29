@@ -1,4 +1,4 @@
-package org.npathai;
+package org.npathai.domain;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

@@ -1,4 +1,6 @@
-package org.npathai;
+package org.npathai.command;
+
+import org.npathai.service.UserService;
 
 import java.util.regex.Pattern;
 

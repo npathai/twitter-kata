@@ -1,10 +1,11 @@
-package org.npathai;
+package org.npathai.command;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.npathai.domain.Post;
 
 import java.time.LocalDateTime;
 import java.util.List;
